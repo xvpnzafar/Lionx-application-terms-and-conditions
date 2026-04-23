@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LionX VPN — Terms & Conditions</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --lion-gold: #D4960A;
+    --lion-gold-light: #F0B830;
+    --lion-dark: #0A0A0F;
+    --lion-surface: #111118;
+    --lion-card: #16161F;
+    --lion-border: rgba(212,150,10,0.18);
+    --lion-border-bright: rgba(212,150,10,0.45);
+    --lion-text: #EDE8DC;
+    --lion-muted: rgba(237,232,220,0.5);
+    --lion-accent: #FF6B2B;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--lion-dark);
+    color: var(--lion-text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.75;
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+
+  /* ── Noise overlay ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.6;
+  }
+
+  /* ── Ambient glow orbs ── */
+  .orb {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(100px);
+    pointer-events: none;
+    z-index: 0;
+    animation: orbFloat 8s ease-in-out infinite alternate;
+  }
+  .orb-1 { width: 500px; height: 500px; background: rgba(212,150,10,0.07); top: -150px; left: -100px; animation-delay: 0s; }
+  .orb-2 { width: 400px; height: 400px; background: rgba(255,107,43,0.05); bottom: 0; right: -100px; animation-delay: 3s; }
+  .orb-3 { width: 300px; height: 300px; background: rgba(212,150,10,0.04); top: 50%; left: 50%; animation-delay: 1.5s; }
+
+  @keyframes orbFloat {
+    from { transform: translate(0, 0) scale(1); }
+    to   { transform: translate(30px, -40px) scale(1.08); }
+  }
+
+  /* ── Header ── */
+  header {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    padding: 80px 24px 60px;
+    border-bottom: 1px solid var(--lion-border);
+    overflow: hidden;
+  }
+
+  header::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 600px; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--lion-gold), transparent);
+    animation: shimmer 3s ease-in-out infinite;
+  }
+
+  @keyframes shimmer {
+    0%, 100% { opacity: 0.4; width: 200px; }
+    50% { opacity: 1; width: 600px; }
+  }
+
+  .logo-mark {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeDown 0.8s ease forwards 0.2s;
+  }
+
+  .lion-icon {
+    width: 52px; height: 52px;
+    border: 1.5px solid var(--lion-border-bright);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(212,150,10,0.08);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .lion-icon::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(212,150,10,0.15), transparent);
+    animation: iconGlow 2s ease-in-out infinite alternate;
+  }
+
+  @keyframes iconGlow {
+    from { opacity: 0.5; }
+    to   { opacity: 1; }
+  }
+
+  .lion-icon svg { position: relative; z-index: 1; }
+
+  .logo-text {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px;
+    letter-spacing: 4px;
+    color: var(--lion-gold-light);
+  }
+
+  .logo-sub {
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--lion-muted);
+    text-transform: uppercase;
+    margin-left: 2px;
+  }
+
+  h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(48px, 8vw, 96px);
+    letter-spacing: 3px;
+    line-height: 0.95;
+    color: var(--lion-text);
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: fadeDown 0.9s ease forwards 0.4s;
+  }
+
+  h1 span {
+    display: block;
+    -webkit-text-stroke: 1px rgba(212,150,10,0.6);
+    color: transparent;
+  }
+
+  .header-meta {
+    font-size: 13px;
+    color: var(--lion-muted);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    opacity: 0;
+    animation: fadeDown 0.9s ease forwards 0.6s;
+  }
+
+  .header-meta span {
+    color: var(--lion-gold);
+    font-weight: 500;
+  }
+
+  /* ── Scrolling ticker ── */
+  .ticker-wrap {
+    overflow: hidden;
+    border-top: 1px solid var(--lion-border);
+    border-bottom: 1px solid var(--lion-border);
+    padding: 10px 0;
+    background: rgba(212,150,10,0.03);
+    position: relative;
+    z-index: 5;
+  }
+
+  .ticker {
+    display: flex;
+    width: max-content;
+    animation: tickerScroll 28s linear infinite;
+  }
+
+  .ticker-item {
+    white-space: nowrap;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--lion-muted);
+    padding: 0 40px;
+  }
+
+  .ticker-item .dot {
+    color: var(--lion-gold);
+    margin: 0 16px;
+  }
+
+  @keyframes tickerScroll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+  /* ── TOC Navigation ── */
+  .toc-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(10,10,15,0.92);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--lion-border);
+    padding: 0 24px;
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .toc-nav::-webkit-scrollbar { display: none; }
+
+  .toc-link {
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--lion-muted);
+    text-decoration: none;
+    padding: 16px 18px;
+    white-space: nowrap;
+    border-bottom: 2px solid transparent;
+    transition: color 0.3s, border-color 0.3s;
+  }
+  .toc-link:hover, .toc-link.active {
+    color: var(--lion-gold-light);
+    border-bottom-color: var(--lion-gold);
+  }
+
+  /* ── Main content ── */
+  main {
+    position: relative;
+    z-index: 5;
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 64px 24px 100px;
+  }
+
+  /* ── Section ── */
+  .section {
+    margin-bottom: 56px;
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .section.visible { opacity: 1; transform: translateY(0); }
+
+  .section-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--lion-border);
+    position: relative;
+  }
+
+  .section-header::after {
+    content: '';
+    position: absolute;
+    bottom: -1px; left: 0;
+    width: 60px; height: 1px;
+    background: var(--lion-gold);
+    transition: width 0.5s ease;
+  }
+  .section.visible .section-header::after { width: 180px; }
+
+  .section-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 48px;
+    line-height: 1;
+    color: rgba(212,150,10,0.2);
+    min-width: 56px;
+    user-select: none;
+  }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 2px;
+    color: var(--lion-text);
+    padding-top: 6px;
+  }
+
+  .section-title .accent { color: var(--lion-gold); }
+
+  /* ── Cards ── */
+  .card {
+    background: var(--lion-card);
+    border: 1px solid var(--lion-border);
+    border-radius: 12px;
+    padding: 28px 32px;
+    margin-bottom: 16px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+  .card:hover {
+    border-color: var(--lion-border-bright);
+    transform: translateX(4px);
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px; height: 100%;
+    background: linear-gradient(180deg, var(--lion-gold) 0%, var(--lion-accent) 100%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    border-radius: 12px 0 0 12px;
+  }
+  .card:hover::before { opacity: 1; }
+
+  .card p, .card li {
+    font-size: 15px;
+    color: rgba(237,232,220,0.75);
+    line-height: 1.8;
+  }
+
+  .card ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .card li {
+    padding: 6px 0 6px 22px;
+    position: relative;
+  }
+
+  .card li::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 17px;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--lion-gold);
+    opacity: 0.7;
+  }
+
+  .card-title {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--lion-gold);
+    margin-bottom: 12px;
+  }
+
+  /* ── Warning card ── */
+  .card-warn {
+    border-color: rgba(255,107,43,0.25);
+    background: rgba(255,107,43,0.04);
+  }
+  .card-warn::before { background: var(--lion-accent); }
+  .card-warn .card-title { color: var(--lion-accent); }
+  .card-warn li::before { background: var(--lion-accent); }
+
+  /* ── Highlight box ── */
+  .highlight-box {
+    background: rgba(212,150,10,0.06);
+    border: 1px solid rgba(212,150,10,0.3);
+    border-radius: 10px;
+    padding: 24px 28px;
+    margin: 24px 0;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+  .highlight-box .icon {
+    font-size: 22px;
+    margin-top: 2px;
+    flex-shrink: 0;
+  }
+  .highlight-box p {
+    font-size: 14px;
+    color: rgba(237,232,220,0.8);
+    line-height: 1.7;
+  }
+  .highlight-box strong { color: var(--lion-gold-light); font-weight: 500; }
+
+  /* ── Badge tags ── */
+  .badge {
+    display: inline-block;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-weight: 500;
+    padding: 4px 10px;
+    border-radius: 4px;
+    background: rgba(212,150,10,0.12);
+    color: var(--lion-gold-light);
+    border: 1px solid rgba(212,150,10,0.25);
+    margin-right: 6px;
+    margin-bottom: 6px;
+  }
+  .badge-red {
+    background: rgba(255,107,43,0.1);
+    color: #FF8C60;
+    border-color: rgba(255,107,43,0.25);
+  }
+
+  /* ── Contact block ── */
+  .contact-block {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-top: 24px;
+  }
+
+  .contact-item {
+    background: var(--lion-card);
+    border: 1px solid var(--lion-border);
+    border-radius: 10px;
+    padding: 20px 24px;
+    transition: border-color 0.3s;
+  }
+  .contact-item:hover { border-color: var(--lion-border-bright); }
+
+  .contact-label {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--lion-muted);
+    margin-bottom: 8px;
+  }
+  .contact-value {
+    font-size: 14px;
+    color: var(--lion-gold-light);
+    font-weight: 400;
+  }
+
+  /* ── Footer ── */
+  footer {
+    position: relative;
+    z-index: 5;
+    border-top: 1px solid var(--lion-border);
+    padding: 48px 24px;
+    text-align: center;
+  }
+
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 48px;
+    letter-spacing: 8px;
+    color: rgba(212,150,10,0.15);
+    margin-bottom: 20px;
+    animation: pulseFade 4s ease-in-out infinite;
+  }
+
+  @keyframes pulseFade {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+  }
+
+  footer p {
+    font-size: 12px;
+    color: var(--lion-muted);
+    letter-spacing: 1px;
+    line-height: 2;
+  }
+  footer a { color: var(--lion-gold); text-decoration: none; }
+
+  /* ── Scroll progress ── */
+  .progress-bar {
+    position: fixed;
+    top: 0; left: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--lion-gold), var(--lion-accent));
+    width: 0%;
+    z-index: 999;
+    transition: width 0.1s linear;
+    box-shadow: 0 0 8px rgba(212,150,10,0.5);
+  }
+
+  /* ── Animations ── */
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── Last updated badge ── */
+  .updated-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--lion-muted);
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--lion-border);
+    border-radius: 100px;
+    padding: 6px 16px;
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeDown 0.9s ease forwards 0.8s;
+  }
+  .updated-pill::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: #4ADE80;
+    box-shadow: 0 0 8px #4ADE80;
+    animation: blink 2s ease-in-out infinite;
+  }
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  /* ── Divider ── */
+  .divider {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--lion-border-bright), transparent);
+    margin: 40px 0;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 600px) {
+    h1 { font-size: 52px; }
+    .section-num { font-size: 36px; min-width: 40px; }
+    .section-title { font-size: 22px; }
+    .card { padding: 20px 20px; }
+    .toc-link { padding: 14px 12px; font-size: 10px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
+
+<!-- Header -->
+<header>
+  <div class="logo-mark">
+    <div class="lion-icon">
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M14 4C9.02 4 5 8.02 5 13c0 3.1 1.52 5.84 3.87 7.53L8 24h12l-.87-3.47A9 9 0 0 0 23 13c0-4.98-4.02-9-9-9Z" stroke="#D4960A" stroke-width="1.5" fill="rgba(212,150,10,0.12)"/>
+        <circle cx="10.5" cy="12.5" r="1.5" fill="#D4960A"/>
+        <circle cx="17.5" cy="12.5" r="1.5" fill="#D4960A"/>
+        <path d="M11 17s1 2 3 2 3-2 3-2" stroke="#D4960A" stroke-width="1.2" stroke-linecap="round"/>
+        <path d="M7 10c-2-1-2.5-3-1-4M21 10c2-1 2.5-3 1-4M5 13c-2 0-3-1-2.5-2.5M23 13c2 0 3-1 2.5-2.5" stroke="#F0B830" stroke-width="1" stroke-linecap="round" opacity="0.7"/>
+      </svg>
+    </div>
+    <div>
+      <div class="logo-text">LionX</div>
+      <div class="logo-sub">Secure VPN</div>
+    </div>
+  </div>
+
+  <div class="updated-pill">Last updated — April 2026</div>
+
+  <h1>Terms &<span>Conditions</span></h1>
+  <p class="header-meta">Effective <span>April 23, 2026</span> &nbsp;·&nbsp; Version <span>3.1</span></p>
+</header>
+
+<!-- Ticker -->
+<div class="ticker-wrap">
+  <div class="ticker">
+    <span class="ticker-item">Privacy Protected <span class="dot">◆</span></span>
+    <span class="ticker-item">No-Log Policy <span class="dot">◆</span></span>
+    <span class="ticker-item">256-bit Encryption <span class="dot">◆</span></span>
+    <span class="ticker-item">Global Coverage <span class="dot">◆</span></span>
+    <span class="ticker-item">Zero Data Sharing <span class="dot">◆</span></span>
+    <span class="ticker-item">Kill Switch Enabled <span class="dot">◆</span></span>
+    <span class="ticker-item">LionX VPN <span class="dot">◆</span></span>
+    <span class="ticker-item">Privacy Protected <span class="dot">◆</span></span>
+    <span class="ticker-item">No-Log Policy <span class="dot">◆</span></span>
+    <span class="ticker-item">256-bit Encryption <span class="dot">◆</span></span>
+    <span class="ticker-item">Global Coverage <span class="dot">◆</span></span>
+    <span class="ticker-item">Zero Data Sharing <span class="dot">◆</span></span>
+    <span class="ticker-item">Kill Switch Enabled <span class="dot">◆</span></span>
+    <span class="ticker-item">LionX VPN <span class="dot">◆</span></span>
+  </div>
+</div>
+
+<!-- TOC Navigation -->
+<nav class="toc-nav" id="tocNav">
+  <a href="#acceptance" class="toc-link active">Acceptance</a>
+  <a href="#services" class="toc-link">Services</a>
+  <a href="#eligibility" class="toc-link">Eligibility</a>
+  <a href="#usage" class="toc-link">Acceptable Use</a>
+  <a href="#privacy" class="toc-link">Privacy</a>
+  <a href="#payment" class="toc-link">Payment</a>
+  <a href="#termination" class="toc-link">Termination</a>
+  <a href="#liability" class="toc-link">Liability</a>
+  <a href="#changes" class="toc-link">Changes</a>
+  <a href="#contact" class="toc-link">Contact</a>
+</nav>
+
+<main>
+
+  <!-- 01 Acceptance -->
+  <section class="section" id="acceptance">
+    <div class="section-header">
+      <div class="section-num">01</div>
+      <div class="section-title"><span class="accent">Acceptance</span> of Terms</div>
+    </div>
+
+    <div class="highlight-box">
+      <div class="icon">⚡</div>
+      <p>By downloading, installing, or using <strong>LionX VPN</strong>, you confirm that you have read, understood, and agree to be bound by these Terms & Conditions. If you do not agree, please discontinue use immediately.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Agreement Scope</div>
+      <ul>
+        <li>These terms constitute a legally binding agreement between you and LionX Technologies Ltd.</li>
+        <li>This agreement governs all products, services, apps, and websites operated under the LionX brand.</li>
+        <li>Use of the service by minors requires verifiable parental or guardian consent.</li>
+        <li>Continued use after updates to these terms constitutes acceptance of the revised terms.</li>
+      </ul>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- 02 Services -->
+  <section class="section" id="services">
+    <div class="section-header">
+      <div class="section-num">02</div>
+      <div class="section-title">Our <span class="accent">Services</span></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">What LionX Provides</div>
+      <p>LionX VPN offers encrypted tunnel technology routing your internet traffic through our secure server infrastructure. Our services include:</p>
+      <ul>
+        <li>Military-grade 256-bit AES encrypted connections</li>
+        <li>Access to 90+ country server locations worldwide</li>
+        <li>Automatic kill switch and DNS leak protection</li>
+        <li>Split tunneling for selective app routing</li>
+        <li>Multi-device support (up to 10 simultaneous connections)</li>
+        <li>24/7 live customer and technical support</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Service Availability</div>
+      <p>LionX VPN strives to maintain 99.9% uptime. However, scheduled maintenance, updates, or unforeseen technical issues may cause temporary disruptions. We are not liable for losses arising from service downtime.</p>
+    </div>
+
+    <div class="highlight-box">
+      <div class="icon">🔒</div>
+      <p><strong>Strict No-Log Policy:</strong> LionX does not record, monitor, or store any logs of your browsing activity, connection timestamps, session duration, IP addresses, or DNS queries. Your privacy is absolute.</p>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- 03 Eligibility -->
+  <section class="section" id="eligibility">
+    <div class="section-header">
+      <div class="section-num">03</div>
+      <div class="section-title">User <span class="accent">Eligibility</span></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Who May Use LionX</div>
+      <ul>
+        <li>You must be at least 18 years of age, or the age of majority in your jurisdiction.</li>
+        <li>You must have the legal capacity to enter into a binding contract.</li>
+        <li>You must not be prohibited from receiving services under applicable laws.</li>
+        <li>You must not be a resident of a jurisdiction where VPN use is prohibited by law.</li>
+        <li>Corporate or business accounts require an authorized representative's acceptance.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Account Responsibility</div>
+      <p>You are solely responsible for maintaining the confidentiality of your login credentials. Any activity occurring under your account is your responsibility. Notify LionX immediately at <strong style="color: var(--lion-gold);">security@lionxvpn.com</strong> if you suspect unauthorized access.</p>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- 04 Acceptable Use -->
+  <section class="section" id="usage">
+    <div class="section-header">
+      <div class="section-num">04</div>
+      <div class="section-title"><span class="accent">Acceptable</span> Use Policy</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Permitted Activities</div>
+      <ul>
+        <li>Protecting your data on public Wi-Fi networks</li>
+        <li>Accessing geo-restricted content in compliance with platform terms</li>
+        <li>Securing remote work communications and sensitive business data</li>
+        <li>Safeguarding personal privacy and anonymity online</li>
+        <li>Bypassing censorship in jurisdictions with restricted internet access</li>
+      </ul>
+    </div>
+
+    <div class="card card-warn">
+      <div class="card-title">Strictly Prohibited</div>
+      <ul>
+        <li>Distribution, uploading, or accessing child sexual abuse material (CSAM)</li>
+        <li>Conducting cyberattacks, DDoS attacks, hacking, or network intrusion</li>
+        <li>Sending spam, phishing content, or malicious communications at scale</li>
+        <li>Engaging in terrorism financing, arms trafficking, or organized crime activities</li>
+        <li>Violating intellectual property rights or engaging in large-scale piracy</li>
+        <li>Circumventing export controls or sanctions imposed by applicable law</li>
+        <li>Using LionX to conduct fraud, identity theft, or financial crimes</li>
+        <li>Reselling or sublicensing LionX services without written authorization</li>
+      </ul>
+    </div>
+
+    <p style="font-size:13px; color: var(--lion-muted); margin-top: 8px; padding-left: 4px;">Violations will result in immediate account termination and, where required by law, cooperation with relevant authorities.</p>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- 05 Privacy -->
+  <section class="section" id="privacy">
+    <div class="section-header">
+      <div class="section-num">05</div>
+      <div class="section-title">Privacy &amp; <span class="accent">Data</span></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Data We Collect</div>
+      <ul>
+        <li><strong style="color:var(--lion-text)">Account data:</strong> email address, hashed password, subscription plan</li>
+        <li><strong style="color:var(--lion-text)">Payment data:</strong> processed by third-party providers (Stripe/PayPal); we do not store card details</li>
+        <li><strong style="color:var(--lion-text)">Aggregate diagnostics:</strong> app crash reports and anonymous performance metrics</li>
+        <li><strong style="color:var(--lion-text)">We never collect:</strong> browsing history, DNS queries, IP addresses, or connection logs</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Your Rights</div>
+      <div style="display:flex; flex-wrap: wrap; margin-bottom: 12px;">
+        <span class="badge">Right to Access</span>
+        <span class="badge">Right to Deletion</span>
+        <span class="badge">Right to Portability</span>
+        <span class="badge">Right to Correction</span>
+        <span class="badge">Right to Object</span>
+        <span class="badge">GDPR Compliant</span>
+      </div>
+      <p>Submit data requests to <strong style="color:var(--lion-gold)">privacy@lionxvpn.com</strong>. We process all requests within 30 days.</p>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- 06 Payment -->
+  <section class="section" id="payment">
+    <div class="section-header">
+      <div class="section-num">06</div>
+      <div class="section-title">Payment &amp; <span class="accent">Billing</span></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Subscription Terms</div>
+      <ul>
+        <li>Subscriptions auto-renew unless cancelled at least 24 hours before the renewal date.</li>
+        <li>All prices are displayed in USD unless otherwise stated at point of purchase.</li>
+        <li>We reserve the right to adjust pricing with 30 days written notice to subscribers.</li>
+        <li>Accepted payment methods: major credit/debit cards, PayPal, and cryptocurrencies.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Refund Policy</div>
+      <p>LionX offers a <strong style="color:var(--lion-gold-light)">30-day money-back guarantee</strong> on all new subscriptions. Refund requests must be submitted via the support portal within 30 days of initial purchase. Renewals and multi-year plans upgraded partway through are handled on a pro-rata basis.</p>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- 07 Termination -->
+  <section class="section" id="termination">
+    <div class="section-header">
+      <div class="section-num">07</div>
+      <div class="section-title"><span class="accent">Termination</span> of Service</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Termination by You</div>
+      <p>You may cancel your subscription at any time through your account dashboard or by contacting support. Cancellation stops future billing but does not entitle you to a refund for remaining subscription time unless within the 30-day guarantee window.</p>
+    </div>
+
+    <div class="card card-warn">
+      <div class="card-title">Termination by LionX</div>
+      <ul>
+        <li>Breach or violation of these Terms & Conditions</li>
+        <li>Engagement in prohibited activities as listed in Section 04</li>
+        <li>Fraudulent or abusive use of the service or payment system</li>
+        <li>Provision of false information during account registration</li>
+        <li>Non-payment of subscription fees after a 7-day grace period</li>
+      </ul>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- 08 Liability -->
+  <section class="section" id="liability">
+    <div class="section-header">
+      <div class="section-num">08</div>
+      <div class="section-title">Limitation of <span class="accent">Liability</span></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Disclaimer of Warranties</div>
+      <p>LionX VPN is provided "as is" and "as available" without warranties of any kind, express or implied. We do not warrant that the service will be uninterrupted, error-free, or completely secure against all potential threats.</p>
+    </div>
+
+    <div class="card card-warn">
+      <div class="card-title">Liability Cap</div>
+      <p>To the maximum extent permitted by applicable law, LionX Technologies Ltd. shall not be liable for any indirect, incidental, punitive, special, or consequential damages. Our maximum aggregate liability shall not exceed the total amount you paid to us in the 12 months preceding the claim.</p>
+    </div>
+
+    <div class="highlight-box">
+      <div class="icon">⚖️</div>
+      <p>Some jurisdictions do not allow limitation of liability for certain damages. In such cases, limitations apply to the fullest extent permitted by law in your jurisdiction.</p>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- 09 Changes -->
+  <section class="section" id="changes">
+    <div class="section-header">
+      <div class="section-num">09</div>
+      <div class="section-title">Changes to <span class="accent">Terms</span></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">How We Notify You</div>
+      <ul>
+        <li>Material changes will be communicated via email at least 14 days in advance.</li>
+        <li>Minor updates (clarifications, formatting) may be made without prior notice.</li>
+        <li>The "Last Updated" date at the top of this document reflects the most recent revision.</li>
+        <li>Continued use of LionX after the effective date constitutes acceptance of revised terms.</li>
+        <li>If you disagree with changes, you may cancel your subscription before the effective date.</li>
+      </ul>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- 10 Contact -->
+  <section class="section" id="contact">
+    <div class="section-header">
+      <div class="section-num">10</div>
+      <div class="section-title">Get in <span class="accent">Touch</span></div>
+    </div>
+
+    <p style="font-size:15px; color: var(--lion-muted); margin-bottom: 24px;">For questions, legal inquiries, or support regarding these Terms & Conditions, reach us through any of the following channels:</p>
+
+    <div class="contact-block">
+      <div class="contact-item">
+        <div class="contact-label">General Support</div>
+        <div class="contact-value">support@lionxvpn.com</div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-label">Legal & Compliance</div>
+        <div class="contact-value">legal@lionxvpn.com</div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-label">Privacy Requests</div>
+        <div class="contact-value">privacy@lionxvpn.com</div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-label">Security Reports</div>
+        <div class="contact-value">security@lionxvpn.com</div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:20px;">
+      <div class="card-title">Governing Law</div>
+      <p>These Terms shall be governed by and construed in accordance with the laws of England and Wales. Any disputes shall be subject to the exclusive jurisdiction of the courts of England and Wales, unless mandatory local consumer protection law provides otherwise.</p>
+    </div>
+  </section>
+
+</main>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-logo">LIONX VPN</div>
+  <p>© 2026 LionX Technologies Ltd. All rights reserved.</p>
+  <p>By using LionX, you roar with privacy. 🦁</p>
+  <p style="margin-top:12px;">
+    <a href="#acceptance">Terms</a> &nbsp;·&nbsp;
+    <a href="#privacy">Privacy Policy</a> &nbsp;·&nbsp;
+    <a href="#contact">Contact</a>
+  </p>
+</footer>
+
+<script>
+  // Scroll progress bar
+  window.addEventListener('scroll', () => {
+    const scrolled = window.scrollY;
+    const total = document.body.scrollHeight - window.innerHeight;
+    document.getElementById('progressBar').style.width = (scrolled / total * 100) + '%';
+  });
+
+  // Intersection observer for section reveal
+  const sections = document.querySelectorAll('.section');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) e.target.classList.add('visible');
+    });
+  }, { threshold: 0.1, rootMargin: '-40px 0px' });
+  sections.forEach(s => observer.observe(s));
+
+  // Active TOC link
+  const tocLinks = document.querySelectorAll('.toc-link');
+  const sectionEls = document.querySelectorAll('section[id]');
+
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sectionEls.forEach(sec => {
+      const top = sec.getBoundingClientRect().top;
+      if (top < 160) current = sec.id;
+    });
+    tocLinks.forEach(link => {
+      link.classList.toggle('active', link.getAttribute('href') === '#' + current);
+    });
+  });
+</script>
+</body>
+</html>
